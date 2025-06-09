@@ -1,1 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMDeveloper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
+        body {
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #FFFB00, #FF8C00);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            padding-bottom: 80px; /* Space for fixed footer */
+        }
+
+        .logo-wrapper {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-backdrop {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 0 10px rgba(0, 0, 0, 0.05),
+                0 0 0 20px rgba(0, 0, 0, 0.03);
+            transform: rotate(45deg);
+            z-index: 1;
+        }
+
+        .logo-container {
+            width: 250px;
+            height: 250px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.15),
+                inset 0 0 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cards-container {
+            width: 80%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            padding: 15px;
+            background: linear-gradient(to right, #FFEB00 , #FF9700);
+            border: 4px solid white;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-circle {
+            width: 75px;
+            height: 75px;
+            background: white;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #888;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .profile-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .name-text {
+            font-weight: bold;
+            font-size: 32px;
+            color: #333;
+        }
+
+        /* Ripple effect styles */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Floating particles animation */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Fixed footer styles */
+        .footer {
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.53);
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: white;
+        }
+
+        .whatsapp-icon {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .join-now {
+            color: #25D366;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .join-now:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .logo-wrapper {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .logo-container {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .card {
+                padding: 12px;
+            }
+            
+            .profile-circle {
+                width: 40px;
+                height: 40px;
+                font-size: 12px;
+            }
+            
+            .name-text {
+                font-size: 14px;
+            }
+
+            .footer-text {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="logo-wrapper">
+        <div class="logo-backdrop"></div>
+        <div class="logo-container">
+            <img src="Logo.png" alt="Company Logo">
+        </div>
+    </div>
+
+    <div class="cards-container">
+        <a href="https://deadshot.io/" class="card" onclick="createRipple(event, this)">
+            <div class="profile-circle">
+                <img src="https://clashcodes.com/games/thumbs/deadshot-io-small.jpg" alt="Icon 1">
+            </div>
+            <div class="name-text">Deadshot Game</div>
+        </a>
+        
+        <a href="https://an1.com/7361-minecraft-mod.html" class="card" onclick="createRipple(event, this)">
+            <div class="profile-circle">
+                <img src="https://an1.com/uploads/posts/2024-09/1727348015_minecraft.png" alt="Icon 2">
+            </div>
+            <div class="name-text">Minecraft 1.21pe</div>
+        </a>
+        
+        <a href="https://getmodsapk.com/capcut-free-mod-apk/" class="card" onclick="createRipple(event, this)">
+            <div class="profile-circle">
+                <img src="https://getmodsapk.com/storage/CapCut%20%20MOD%20APK7.webp" alt="Icon 3">
+            </div>
+            <div class="name-text">Capcut 14.5.0</div>
+        </a>
+        
+        <a href="https://apkmody.com/apps/picsart" class="card" onclick="createRipple(event, this)">
+            <div class="profile-circle">
+                <img src="https://static.apkmody.com/play-lh.googleusercontent.com/hexunszQESgaMxZdfuGvYdNnS6fRebRqW5lECqadoqlTL3fbJbLL6NKceHlQ58ALXcE=s180-rw" alt="Icon 4">
+            </div>
+            <div class="name-text">Picsart 27.6.6</div>
+        </a>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <span class="footer-text">Creator RMStudio | RMDeveloper 2025</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/512px-WhatsApp.svg.png" alt="WhatsApp" class="whatsapp-icon" onclick="window.open('https://wa.me/yournumber')">
+            <span class="join-now" onclick="window.open('https://whatsapp.com/channel/0029VbAi9gf3gvWS28jkiR0m')">Join Now</span>
+        </div>
+    </div>
+
+    <script>
+        // Ripple effect function
+        function createRipple(event, element) {
+            const circle = document.createElement('span');
+            const diameter = Math.max(element.clientWidth, element.clientHeight);
+            const radius = diameter / 2;
+
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - element.getBoundingClientRect().left - radius}px`;
+            circle.style.top = `${event.clientY - element.getBoundingClientRect().top - radius}px`;
+            circle.classList.add('ripple');
+
+            const ripple = element.getElementsByClassName('ripple')[0];
+            if (ripple) {
+                ripple.remove();
+            }
+
+            element.appendChild(circle);
+        }
+
+        // Floating particles animation
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            const size = Math.random() * 8 + 4;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 6}s`;
+            particle.style.animationDuration = `${6 + Math.random() * 4}s`;
+            
+            document.getElementById('particles').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 10000);
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 1000);
+    </script>
+</body>
+</html>
