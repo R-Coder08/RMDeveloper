@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>KaiOS Activity Test</title>
+  <style>
+    button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>KaiOS Activity Demo</h2>
+
+  <button id="callLog">📞 Open Call Log</button>
+  <button id="dial">📱 Open Dialer</button>
+  <button id="sms">✉️ Send SMS</button>
+  <button id="camera">📷 Open Camera</button>
+
+  <script>
+    function isKaiOS() {
+      return typeof MozActivity !== "undefined";
+    }
+
+    document.getElementById("callLog").addEventListener("click", function () {
+      if (isKaiOS()) {
+        new MozActivity({
+          name: "call-log",
+          data: { type: "webtelephony/number" }
+        });
+      } else {
+        alert("Only works in KaiOS devices.");
+      }
+    });
+
+    document.getElementById("dial").addEventListener("click", function () {
+      if (isKaiOS()) {
+        new MozActivity({
+          name: "dial",
+          data: { number: "1234567890" }
+        });
+      } else {
+        alert("Only works in KaiOS devices.");
+      }
+    });
+
+    document.getElementById("sms").addEventListener("click", function () {
+      if (isKaiOS()) {
+        new MozActivity({
+          name: "new",
+          data: {
+            type: "websms/sms",
+            number: "1234567890",
+            body: "Hello from KaiOS!"
+          }
+        });
+      } else {
+        alert("Only works in KaiOS devices.");
+      }
+    });
+
+    document.getElementById("camera").addEventListener("click", function () {
+      if (isKaiOS()) {
+        new MozActivity({
+          name: "capture",
+          data: { type: "image/png" }
+        });
+      } else {
+        alert("Only works in KaiOS devices.");
+      }
+    });
+  </script>
+
+</body>
+</html>
